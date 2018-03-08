@@ -1,4 +1,4 @@
-package nl.fotoniq.streamradio;
+package streamradio;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -6,7 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
-import static nl.fotoniq.streamradio.Stream.togglePlayingAudio;
+import static streamradio.Stream.togglePlayingAudio;
 
 public class StreamControlActivity extends AppCompatActivity {
 

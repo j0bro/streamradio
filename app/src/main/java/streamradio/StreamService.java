@@ -1,4 +1,4 @@
-package nl.fotoniq.streamradio;
+package streamradio;
 
 import android.app.Notification;
 import android.app.NotificationChannel;

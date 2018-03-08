@@ -1,4 +1,4 @@
-package nl.fotoniq.streamradio;
+package streamradio;
 
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
@@ -8,7 +8,7 @@ import android.content.Intent;
 import android.widget.RemoteViews;
 
 import static android.app.PendingIntent.getBroadcast;
-import static nl.fotoniq.streamradio.Stream.togglePlayingAudio;
+import static streamradio.Stream.togglePlayingAudio;
 
 public class StreamWidget extends AppWidgetProvider {
 

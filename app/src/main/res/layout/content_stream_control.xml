@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="nl.fotoniq.streamradio.StreamControlActivity"
+    tools:context=".StreamControlActivity"
     tools:showIn="@layout/activity_stream_control">
 
 </android.support.constraint.ConstraintLayout>

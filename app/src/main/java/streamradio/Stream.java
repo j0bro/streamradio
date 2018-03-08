@@ -1,4 +1,4 @@
-package nl.fotoniq.streamradio;
+package streamradio;
 
 import android.content.ComponentName;
 import android.content.Context;
