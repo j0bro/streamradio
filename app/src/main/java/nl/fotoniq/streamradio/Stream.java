@@ -12,7 +12,9 @@ import static android.content.Context.BIND_AUTO_CREATE;
 class Stream {
     private static final String URL_NPO_RADIO2 = "http://icecast.omroep.nl/radio2-bb-mp3";
 
-    private static final ServiceConnection SERVICE_CONNECTION = new ServiceConnection() {
+    private static StreamService service;
+
+    private static final ServiceConnection serviceConnection = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName componentName, IBinder binder) {
             StreamService.LocalBinder localBinder = (StreamService.LocalBinder) binder;
@@ -27,17 +29,9 @@ class Stream {
         }
     };
 
-    private static StreamService service;
-
-    static void startBackgroundService(final @NonNull Context context) {
-        final Intent i = new Intent(context, StreamService.class);
-
-        context.bindService(i, SERVICE_CONNECTION, BIND_AUTO_CREATE);
-    }
-
     static void togglePlayingAudio(final @NonNull Context context) {
         if (service == null) {
-            startBackgroundService(context);
+            context.bindService(new Intent(context, StreamService.class), serviceConnection, BIND_AUTO_CREATE);
 
             return;
         }

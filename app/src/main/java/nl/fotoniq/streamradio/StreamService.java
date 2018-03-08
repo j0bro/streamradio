@@ -19,30 +19,13 @@ import static android.media.AudioManager.STREAM_MUSIC;
 
 public class StreamService extends Service {
 
-    public class LocalBinder extends Binder {
-
-        StreamService getService() {
-            return StreamService.this;
-        }
-    }
-
     static final String ACTION_PLAY = "streamservice.PLAY";
-
     static final String STREAM_URL = "streamservice.URL";
-
     private static final int NOTIFICATION_ID = 1;
-
     private static final String CHANNEL_ID = "streamService";
     private static final String CHANNEL_NAME = "StreamRadio";
-
     private MediaPlayer mediaPlayer;
     private IBinder binder = new LocalBinder();
-
-    @Override
-    public void onCreate() {
-        super.onCreate();
-
-    }
 
     @Override
     public void onDestroy() {
@@ -54,11 +37,7 @@ public class StreamService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         if (ACTION_PLAY.equals(intent.getAction())) {
-            if (isPlayingAudio()) {
-                stop();
-            } else {
-                play(intent.getStringExtra(STREAM_URL));
-            }
+            play(intent.getStringExtra(STREAM_URL));
         }
         return START_STICKY;
     }
@@ -83,14 +62,14 @@ public class StreamService extends Service {
     }
 
     void play(final String url) {
-        makeForeground();
-
         try {
             mediaPlayer = new MediaPlayer();
             mediaPlayer.setAudioStreamType(STREAM_MUSIC);
             mediaPlayer.setDataSource(url);
             mediaPlayer.prepare();
             mediaPlayer.start();
+
+            makePersistent();
         } catch (IOException ignored) {
         }
     }
@@ -99,7 +78,7 @@ public class StreamService extends Service {
         return mediaPlayer != null && mediaPlayer.isPlaying();
     }
 
-    private void makeForeground() {
+    private void makePersistent() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationChannel notificationChannel = new NotificationChannel(CHANNEL_ID, CHANNEL_NAME, NotificationManager.IMPORTANCE_NONE);
             NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
@@ -110,6 +89,12 @@ public class StreamService extends Service {
             final Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID).setContentTitle("").setContentText("").setSmallIcon(android.R.drawable.ic_media_play).build();
 
             startForeground(NOTIFICATION_ID, notification);
+        }
+    }
+
+    class LocalBinder extends Binder {
+        StreamService getService() {
+            return StreamService.this;
         }
     }
 }

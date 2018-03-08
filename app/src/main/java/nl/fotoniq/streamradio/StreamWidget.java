@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.widget.RemoteViews;
 
+import static android.app.PendingIntent.getBroadcast;
 import static nl.fotoniq.streamradio.Stream.togglePlayingAudio;
 
 public class StreamWidget extends AppWidgetProvider {
@@ -14,16 +15,17 @@ public class StreamWidget extends AppWidgetProvider {
     static final String ACTION_CLICK = "streamwidget.CLICK";
 
     private void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId) {
-        RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.stream_widget);
+        final RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.stream_widget);
         views.setOnClickPendingIntent(R.id.appwidget_text, getPendingSelfIntent(context, ACTION_CLICK));
 
         appWidgetManager.updateAppWidget(appWidgetId, views);
     }
 
     private PendingIntent getPendingSelfIntent(Context context, String action) {
-        Intent intent = new Intent(context, getClass());
+        final Intent intent = new Intent(context, getClass());
         intent.setAction(action);
-        return PendingIntent.getBroadcast(context, 0, intent, 0);
+
+        return getBroadcast(context, 0, intent, 0);
     }
 
     @Override
